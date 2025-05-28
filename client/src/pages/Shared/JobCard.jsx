@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 
 const JobCard = ({ job }) => {
-  console.log(job);
+
   const {
     description,
     category,
