@@ -1,15 +1,22 @@
 import React from "react";
+import { Link } from "react-router";
 
 const JobCard = ({ job }) => {
   console.log(job);
-  const {description,category,jobType,location,title,company} = job
+  const {
+    description,
+    category,
+    jobType,
+    location,
+    title,
+    company,
+    company_logo,
+    _id,
+  } = job;
   return (
     <div className="card bg-base-100 w-full shadow-sm">
       <figure>
-        <img
-          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-          alt="Shoes"
-        />
+        <img src={company_logo} alt="Shoes" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">
@@ -24,6 +31,9 @@ const JobCard = ({ job }) => {
           <div className="badge badge-outline">Fashion</div>
           <div className="badge badge-outline">Products</div>
         </div>
+        <Link to={`/job/${_id}`} className="btn">
+          Apply Now
+        </Link>
       </div>
     </div>
   );
