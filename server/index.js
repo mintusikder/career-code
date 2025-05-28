@@ -21,7 +21,14 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    
+    const jobsCollection = client.db("careerCode").collection("jobs");
+
+    app.get("/jobs", async (req, res) => {
+      const cursor = jobsCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
