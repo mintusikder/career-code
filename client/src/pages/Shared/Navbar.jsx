@@ -7,6 +7,11 @@ const Navbar = () => {
   const nav = (
     <>
       <NavLink to={"/"}>Home</NavLink>
+      {
+        user && <>
+              <NavLink to={"/myApplication"}>My Application</NavLink>
+        </>
+      }
     </>
   );
 
