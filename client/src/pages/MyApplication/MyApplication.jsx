@@ -2,12 +2,8 @@ import React, { Suspense } from "react";
 import MyApplicationDetails from "./MyApplicationDetails";
 import MyApplicationList from "./MyApplicationList";
 import useAuth from "../../hook/useAuth";
+import { myApplicationPromise } from "../../api/applicationApi";
 
-const myApplicationPromise = (email) => {
-  return fetch(`http://localhost:3000/application?email=${email}`).then((res) =>
-    res.json()
-  );
-};
 
 const MyApplication = () => {
   const { user } = useAuth();
