@@ -10,6 +10,7 @@ const Navbar = () => {
       {
         user && <>
               <NavLink to={"/myApplication"}>My Application</NavLink>
+              <NavLink to={"/addJobs"}>Add Jobs</NavLink>
         </>
       }
     </>
