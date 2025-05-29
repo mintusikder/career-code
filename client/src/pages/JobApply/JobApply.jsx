@@ -1,0 +1,52 @@
+import React from "react";
+import { useParams } from "react-router";
+import useAuth from "../../hook/useAuth";
+
+const JobApply = () => {
+  const { id: jonId } = useParams();
+  const { user } = useAuth();
+  console.log(user);
+  const handelApplySubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const github = form.github.value 
+    const linkin = form.linkin.value
+    const resume = form.resume.value 
+    console.log(github,linkin,resume)
+  };
+  return (
+    <div>
+      <h3 className="text-4xl">Apply Jobs</h3>
+      <form onSubmit={handelApplySubmit} className="py-12">
+        <fieldset className="fieldset  bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <label className="label">Github Link</label>
+          <input
+            name="github"
+            type="url"
+            className="input"
+            placeholder="github"
+          />
+
+          <label className="label">LinkIn Link</label>
+          <input
+            name="linkin"
+            type="url"
+            className="input"
+            placeholder="LinkIn"
+          />
+
+          <label className="label">Resume</label>
+          <input
+            name="resume"
+            type="url"
+            className="input"
+            placeholder="Resume"
+          />
+          <input className="btn" type="submit" value="Apply" />
+        </fieldset>
+      </form>
+    </div>
+  );
+};
+
+export default JobApply;

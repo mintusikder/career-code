@@ -1,24 +1,31 @@
-import React, { use } from 'react';
+import React, { use } from "react";
 import registerLottie from "../../assets/register.json";
-import { AuthContext } from '../../provider/AuthProvider';
-import Lottie from 'lottie-react';
+import { AuthContext } from "../../provider/AuthProvider";
+import Lottie from "lottie-react";
+import { useLocation, useNavigate } from "react-router";
 const Login = () => {
-    const {loginUser} = use(AuthContext)
-      const handelLogin = (e) => {
+  const { loginUser } = use(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate()
+  const from = location.state  || "/"
+  // console.log("location in sign in page", location);
+  const handelLogin = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
-    loginUser(email,password)
-    .then(result =>{
-      console.log(result)
-    }).catch(error =>{
-      console.log(error)
-    })
+    loginUser(email, password)
+      .then((result) => {
+        console.log(result);
+        navigate(from)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-    return (
-     <div className="hero bg-base-200 min-h-screen">
+  return (
+    <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center lg:text-left">
           <Lottie
@@ -54,7 +61,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default Login;
