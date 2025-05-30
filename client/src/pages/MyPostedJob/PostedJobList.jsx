@@ -39,7 +39,7 @@ const PostedJobList = ({ jobsCreatedByPrimes }) => {
                 <td>{job.title}</td>
                 <td>{job.location}</td>
                 <td>{job.company}</td>
-                <td><Link to={`/application/${job._id}`}>View Application</Link></td>
+                <td><Link to={`/viewApplication/${job._id}`}>View Application</Link></td>
               </tr>
             ))}
           </tbody>

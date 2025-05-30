@@ -27,11 +27,10 @@ async function run() {
       .collection("application");
 
     app.get("/jobs", async (req, res) => {
-
-      const email = req.query.email 
-      const query ={}
-      if(email){
-        query.hr_email = email
+      const email = req.query.email;
+      const query = {};
+      if (email) {
+        query.hr_email = email;
       }
 
       const cursor = jobsCollection.find(query);
@@ -61,6 +60,12 @@ async function run() {
       const query = {
         applicant: email,
       };
+      app.get("/application/job/:job_id", async (req, res) => {
+        const job_id = req.params.job_id;
+        const query = { jobId: job_id };
+        const result = await applicationCollection.find(query).toArray();
+        res.send(result);
+      });
       const result = await applicationCollection.find(query).toArray();
       res.send(result);
     });
