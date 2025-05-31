@@ -5,7 +5,12 @@ const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173/"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
@@ -31,7 +36,7 @@ async function run() {
     app.post("/jwt", async (req, res) => {
       const { email } = req.body;
       const user = { email };
-      const token = jwt.sign(user, "secret", {
+      const token = jwt.sign(user, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
       res.send(token);
