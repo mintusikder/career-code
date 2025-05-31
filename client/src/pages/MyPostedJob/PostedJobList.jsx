@@ -18,21 +18,7 @@ const PostedJobList = ({ jobsCreatedByPrimes }) => {
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Blue</td>
-            </tr>
-            {/* row 2 */}
-            <tr>
-              <th>2</th>
-              <td>Hart Hagerty</td>
-              <td>Desktop Support Technician</td>
-              <td>Purple</td>
-            </tr>
-            {/* row 3 */}
+           
             {jobs.map((job,index) => (
               <tr key={job._id}>
                 <th>{index +1}</th>

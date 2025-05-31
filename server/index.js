@@ -1,5 +1,6 @@
 const express = require("express");
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
@@ -25,6 +26,17 @@ async function run() {
     const applicationCollection = client
       .db("careerCode")
       .collection("application");
+
+    //jwt token api
+    app.post("/jwt", async (req, res) => {
+      const { email } = req.body;
+      const user = { email };
+      const token = jwt.sign(user, "secret", {
+        expiresIn: "1h",
+      });
+      res.send(token);
+    });
+    //jobs api
 
     app.get("/jobs", async (req, res) => {
       const email = req.query.email;
