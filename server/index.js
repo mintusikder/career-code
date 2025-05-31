@@ -13,6 +13,16 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(cookieParser());
+const logger = (req, res, next) => {
+  console.log("inside the logger");
+  next();
+};
+const verifyToken = (req, res, next) => {
+  const token = req?.cookies?.token;
+  console.log("cookie in the middelware", token);
+  next();
+};
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.rmmjiwd.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
@@ -78,9 +88,9 @@ async function run() {
     //   res.send(result);
     // });
     // job application related application
-    app.get("/application", async (req, res) => {
+    app.get("/application", logger, verifyToken, async (req, res) => {
       const email = req.query.email;
-      console.log("inside",req.cookies)
+      console.log("inside", req.cookies);
       const query = {
         applicant: email,
       };
