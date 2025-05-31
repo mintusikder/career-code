@@ -21,7 +21,18 @@ const logger = (req, res, next) => {
 const verifyToken = (req, res, next) => {
   const token = req?.cookies?.token;
   console.log("cookie in the middelware", token);
-  next();
+  if (!token) {
+    return res.status(401).send({ message: "unAuthorized access" });
+  }
+  //verify
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({ message: "unAuthorized access" });
+    }
+    req.decoded =decoded
+      next();
+  });
+
 };
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
@@ -90,6 +101,9 @@ async function run() {
     // job application related application
     app.get("/application", logger, verifyToken, async (req, res) => {
       const email = req.query.email;
+      if(email !== req.decoded.email){
+        return res.status(403).send({message : "forbidden"})
+      }
       console.log("inside", req.cookies);
       const query = {
         applicant: email,
