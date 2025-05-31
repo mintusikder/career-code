@@ -1,13 +1,14 @@
 const express = require("express");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: ["http://localhost:5173/"],
+    origin: ["http://localhost:5173"],
     credentials: true,
   })
 );
@@ -34,12 +35,17 @@ async function run() {
 
     //jwt token api
     app.post("/jwt", async (req, res) => {
-      const { email } = req.body;
-      const user = { email };
-      const token = jwt.sign(user, process.env.JWT_SECRET, {
+      const userData = req.body;
+
+      const token = jwt.sign(userData, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
-      res.send(token);
+      //set token in the cookie
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+      });
+      res.send({ success: true });
     });
     //jobs api
 
@@ -74,6 +80,7 @@ async function run() {
     // job application related application
     app.get("/application", async (req, res) => {
       const email = req.query.email;
+      console.log("inside",req.cookies)
       const query = {
         applicant: email,
       };
